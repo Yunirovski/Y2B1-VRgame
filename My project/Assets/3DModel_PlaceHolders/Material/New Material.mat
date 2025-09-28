@@ -13,7 +13,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAMODULATE_ON
-  - _SPECULAR_SETUP
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -111,18 +110,18 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 2
     - _SrcBlendAlpha: 0
     - _Surface: 1
-    - _WorkflowMode: 0
+    - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.759434, g: 0.9947494, b: 1, a: 1}
-    - _Color: {r: 0.759434, g: 0.99474937, b: 1, a: 1}
+    - _BaseColor: {r: 0.645283, g: 0.60754, b: 0.6399091, a: 0.81960785}
+    - _Color: {r: 0.6452829, g: 0.6075399, b: 0.639909, a: 0.81960785}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
