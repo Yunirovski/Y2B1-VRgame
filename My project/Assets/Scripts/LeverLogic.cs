@@ -13,6 +13,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (joint.angle > 60.0) {
+            Debug.Log("Lever is at " + joint.angle);
+        }
     }
 }
