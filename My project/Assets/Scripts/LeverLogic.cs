@@ -13,8 +13,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (joint.angle > 60.0) {
-            Debug.Log("Lever is at " + joint.angle);
+        if (joint.angle > 57.0) {
+            Vector3 dw = transform.TransformDirection(Vector3.down);
+
+            if (Physics.Raycast(transform.position, dw, 10))
+            {
+                Debug.Log("ollison");
+            }
         }
     }
 }
