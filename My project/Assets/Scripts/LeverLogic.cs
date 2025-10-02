@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -8,18 +9,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
     void Start()
     {
         joint = GetComponent<HingeJoint>();
+        
+    }
+
+    public UnityEvent OnEnterTrigger;
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (joint.angle > 55)
+        {
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (joint.angle > 57.0) {
-            Vector3 dw = transform.TransformDirection(Vector3.down);
 
-            if (Physics.Raycast(transform.position, dw, 10))
-            {
-                Debug.Log("ollison");
-            }
-        }
     }
 }
