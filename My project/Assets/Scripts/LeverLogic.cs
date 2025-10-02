@@ -18,7 +18,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (joint.angle > 55)
         {
-            Debug.Log("Dispensing");
+
         }
     }
 
