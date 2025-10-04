@@ -2,41 +2,40 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    public GameObject destination1; // First destination (e.g. table)
-    public GameObject destination2; // Second destination (e.g. exit)
-    public float arrivalDistance = 0.5f; // Distance to consider "arrived"
+    public GameObject dest1;
+    public GameObject dest2;
+    public float stopDist = 2f;
 
-    private UnityEngine.AI.NavMeshAgent agent;
-    private bool reachedDest1 = false;
-    private bool orderDone = false;
-    private bool movedToDest2 = false;
+    UnityEngine.AI.NavMeshAgent agent;
+    bool atDest1 = false;
+    bool orderDone = false;
 
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.SetDestination(destination1.transform.position);
+        agent.SetDestination(dest1.transform.position);
     }
 
     void Update()
     {
-        // Check if reached destination 1
-        if (!reachedDest1)
+        // Check distance to dest1
+        if (!atDest1)
         {
-            if (Vector3.Distance(transform.position, destination1.transform.position) <= arrivalDistance)
+            float dist = Vector3.Distance(transform.position, dest1.transform.position);
+            if (dist < stopDist)
             {
-                reachedDest1 = true;
+                atDest1 = true;
             }
         }
 
-        // Move to destination 2 after order is done
-        if (orderDone && reachedDest1 && !movedToDest2)
+        // Go to dest2 when order done
+        if (orderDone && atDest1)
         {
-            agent.SetDestination(destination2.transform.position);
-            movedToDest2 = true;
+            agent.SetDestination(dest2.transform.position);
+            orderDone = false; // Prevent repeat
         }
     }
 
-    // Call this when order is complete
     public void CompleteOrder()
     {
         orderDone = true;

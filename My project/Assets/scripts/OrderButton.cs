@@ -4,18 +4,26 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class OrderCompleteButton : MonoBehaviour
 {
-    public Customer customer;
+    public Customer customer; // Drag your customer object here
 
     void Start()
     {
-        GetComponent<XRSimpleInteractable>().selectEntered.AddListener(OnButtonPress);
+        // Get the XR Simple Interactable component
+        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
+
+        if (interactable != null)
+        {
+            // Add listener for select (poke) event
+            interactable.selectEntered.AddListener(OnButtonPressed);
+        }
     }
 
-    void OnButtonPress(SelectEnterEventArgs args)
+    void OnButtonPressed(SelectEnterEventArgs args)
     {
         if (customer != null)
         {
             customer.CompleteOrder();
+            Debug.Log("Order completed!");
         }
     }
 }
