@@ -1795,9 +1795,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb746eeabc9c07142b277af9746b3208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::customer
-  destination1: {fileID: 614454225}
-  destination2: {fileID: 1586535279}
-  arrivalDistance: 0.5
+  dest1: {fileID: 614454225}
+  dest2: {fileID: 1586535279}
+  stopDist: 2
 --- !u!195 &903856337
 NavMeshAgent:
   m_ObjectHideFlags: 0
