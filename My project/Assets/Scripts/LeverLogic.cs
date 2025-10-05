@@ -4,6 +4,8 @@ using UnityEngine.Events;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     HingeJoint joint;
+    public GameObject GoobEmpty;
+    public GameObject GoobFull;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +20,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (joint.angle > 55)
         {
-            Debug.Log("Dispensing");
+           Destroy(other.gameObject);
         }
     }
 
