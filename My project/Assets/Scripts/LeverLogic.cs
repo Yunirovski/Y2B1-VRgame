@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -7,11 +8,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public GameObject GoobEmpty;
     public GameObject GoobFull;
 
+    private bool Used;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        joint = GetComponent<HingeJoint>();
-        
+    {   
+
+        joint = GetComponentInChildren<HingeJoint>();
     }
 
     public UnityEvent OnEnterTrigger;
@@ -20,12 +23,21 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (joint.angle > 55)
         {
-           Destroy(other.gameObject);
+            if (!Used)
+            {
+                Destroy(other.gameObject);
+                Instantiate(GoobFull, other.transform.position, Quaternion.identity);
+                Used = true;
+            }
+        }
+        else
+        {
+            Used = false;
         }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
     }
