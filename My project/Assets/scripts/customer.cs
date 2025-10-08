@@ -1,17 +1,43 @@
 using UnityEngine;
 
-public class customer : MonoBehaviour
+public class Customer : MonoBehaviour
 {
-    public GameObject destination1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject dest1;
+    public GameObject dest2;
+    public float stopDist = 2f;
+
+    UnityEngine.AI.NavMeshAgent agent;
+    bool atDest1 = false;
+    bool orderDone = false;
+
     void Start()
     {
-        GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(destination1.transform.position);    
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent.SetDestination(dest1.transform.position);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Check distance to dest1
+        if (!atDest1)
+        {
+            float dist = Vector3.Distance(transform.position, dest1.transform.position);
+            if (dist < stopDist)
+            {
+                atDest1 = true;
+            }
+        }
+
+        // Go to dest2 when order done
+        if (orderDone && atDest1)
+        {
+            agent.SetDestination(dest2.transform.position);
+            orderDone = false; // Prevent repeat
+        }
+    }
+
+    public void CompleteOrder()
+    {
+        orderDone = true;
     }
 }
