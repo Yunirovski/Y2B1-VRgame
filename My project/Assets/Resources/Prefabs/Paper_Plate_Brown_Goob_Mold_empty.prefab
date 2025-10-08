@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7756774753056397185}
   - component: {fileID: 5091959072668688927}
   - component: {fileID: 2166241846132411431}
-  - component: {fileID: 5539329444081949465}
+  - component: {fileID: 2980987840084716052}
   m_Layer: 0
   m_Name: Paper_Plate_Brown_Goob_Mold_empty
   m_TagString: Untagged
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
---- !u!114 &5539329444081949465
+--- !u!114 &2980987840084716052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,44 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8239657029771945257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83f12c537584f51b92c01f10d7090c0, type: 3}
+  m_Script: {fileID: 11500000, guid: f28be009756261b44aee7fa323d73fe8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.State.XRInteractorAffordanceStateProvider
-  m_TransitionDuration: 0.125
-  m_InteractorSource: {fileID: 0}
-  m_IgnoreHoverEvents: 0
-  m_IgnoreSelectEvents: 0
-  m_IgnoreActivateEvents: 1
-  m_IgnoreUGUIHover: 0
-  m_IgnoreUGUISelect: 0
-  m_IgnoreXRInteractionEvents: 0
-  m_SelectClickAnimationMode: 1
-  m_ActivateClickAnimationMode: 1
-  m_ClickAnimationDuration: 0.25
-  m_ClickAnimationCurve:
-    m_UseConstant: 1
-    m_ConstantValue:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_Variable: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::PlateBehavior
+  Plate: {fileID: 0}
