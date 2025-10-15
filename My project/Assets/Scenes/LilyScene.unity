@@ -956,6 +956,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7977c3ce46eecb64494ed23497a2e0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  GoobEmpty: {fileID: 0}
+  GoobFull: {fileID: 0}
+  OnEnterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2107252386
 PrefabInstance:
   m_ObjectHideFlags: 0

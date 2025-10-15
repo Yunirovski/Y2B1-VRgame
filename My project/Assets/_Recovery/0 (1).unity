@@ -493,6 +493,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7977c3ce46eecb64494ed23497a2e0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  GoobEmpty: {fileID: 0}
+  GoobFull: {fileID: 0}
+  OnEnterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &441087506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1464,7 +1469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb746eeabc9c07142b277af9746b3208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::customer
-  destination1: {fileID: 614454225}
+  dest1: {fileID: 0}
+  dest2: {fileID: 0}
+  stopDist: 2
 --- !u!195 &903856337
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2732,7 +2739,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 9bd94dba0e4a0b646a9fa13279fc900d, type: 2}
   m_BuildHeightMesh: 0
