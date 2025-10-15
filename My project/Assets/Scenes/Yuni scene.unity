@@ -923,6 +923,7 @@ MonoBehaviour:
   queuePosition: {fileID: 0}
   exitPosition: {fileID: 1953584519}
   stopDistance: 0.1
+  positionCheckInterval: 0.2
   hasReceivedOrder: 0
   isAtCounter: 0
 --- !u!1 &467010296
@@ -2082,7 +2083,6 @@ Transform:
   - {fileID: 1953584519}
   - {fileID: 1352429703}
   - {fileID: 1432108831}
-  - {fileID: 1202919613}
   m_Father: {fileID: 329836369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &992317160
@@ -2107,6 +2107,7 @@ MonoBehaviour:
   - {fileID: 1904250683}
   spawnPoint: {fileID: 992317159}
   spawnInterval: 5
+  maxQueueSize: 5
 --- !u!1001 &1021375783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2466,37 +2467,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 465715801}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1202919612
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1202919613}
-  m_Layer: 0
-  m_Name: point3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1202919613
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202919612}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.49, y: 0, z: 5.31}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 992317159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1221959552
 PrefabInstance:
@@ -3475,6 +3445,7 @@ MonoBehaviour:
   queuePosition: {fileID: 0}
   exitPosition: {fileID: 1953584519}
   stopDistance: 0.1
+  positionCheckInterval: 0.2
   hasReceivedOrder: 0
   isAtCounter: 0
 --- !u!195 &1904250686

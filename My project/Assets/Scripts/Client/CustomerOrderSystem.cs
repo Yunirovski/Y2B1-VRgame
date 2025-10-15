@@ -4,41 +4,59 @@ using UnityEngine.AI;
 public class CustomerOrderSystem : MonoBehaviour
 {
     [Header("Order Item")]
-    public GameObject heldItem; // Item in hand (defines order type)
-    public Transform itemHoldPosition; // Where the item is held
+    public GameObject heldItem;              // Item the customer is holding (defines order type)
+    public Transform itemHoldPosition;       // Where the item sits in the customer's hand
 
     [Header("Order Type")]
-    public string orderType; // Automatically set from held item's tag
+    public string orderType;                 // Order type (taken from heldItem.tag)
 
     [Header("Movement")]
-    public Transform queuePosition; // Position in the queue (assigned by QueueManager)
-    public Transform exitPosition;  // Exit position
-    public float stopDistance = 0.5f;
+    public Transform queuePosition;          // Assigned by QueueManager
+    public Transform exitPosition;           // Where the customer leaves
+    public float stopDistance = 0.5f;        // Distance to consider "arrived"
+    public float positionCheckInterval = 0.2f; // How often we check if the target moved
 
     [Header("State")]
-    public bool hasReceivedOrder = false; // True if order is received
-    public bool isAtCounter = false; // True if customer is at counter
+    public bool hasReceivedOrder = false;    // Did the customer get the item?
+    public bool isAtCounter = false;         // Is the customer at the counter?
 
     private NavMeshAgent agent;
     private CustomerState currentState;
+    private float nextPositionCheck;
+    private Vector3 lastTargetPosition;      // Last target position we set on the agent
 
     private enum CustomerState
     {
-        MovingToQueue,
-        WaitingInQueue,
-        AtCounter,
-        Leaving
+        MovingToQueue,   // Walking to their queue spot (or counter if first)
+        WaitingInQueue,  // Standing in the queue (following reassignments)
+        AtCounter,       // At the counter, waiting for item
+        Leaving          // Walking to exit
     }
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        currentState = CustomerState.MovingToQueue;
 
-        // Set order type from held item tag
+        // Basic safety: we need a NavMeshAgent to move
+        if (agent == null)
+        {
+            Debug.LogError("CustomerOrderSystem: Missing NavMeshAgent component.");
+            enabled = false;
+            return;
+        }
+
+        if (!agent.enabled) agent.enabled = true;
+        agent.isStopped = false;
+
+        currentState = CustomerState.MovingToQueue;
+        nextPositionCheck = Time.time;
+        lastTargetPosition = Vector3.zero;
+
+        // Set order type from the held item's tag and attach the item to the hand
         if (heldItem != null)
         {
             orderType = heldItem.tag;
+
             if (itemHoldPosition != null)
             {
                 heldItem.transform.SetParent(itemHoldPosition);
@@ -47,9 +65,10 @@ public class CustomerOrderSystem : MonoBehaviour
             }
         }
 
-        // Move to queue position
+        // Start moving to the initial queue position (if assigned)
         if (queuePosition != null)
         {
+            lastTargetPosition = queuePosition.position;
             agent.SetDestination(queuePosition.position);
         }
     }
@@ -60,22 +79,14 @@ public class CustomerOrderSystem : MonoBehaviour
         {
             case CustomerState.MovingToQueue:
                 CheckArrivalAtQueue();
+                UpdateDestinationIfNeeded(); // Keep following queue position updates
                 break;
 
             case CustomerState.WaitingInQueue:
-                // Keep adjusting position in queue
-                if (queuePosition != null)
-                {
-                    float distance = Vector3.Distance(transform.position, queuePosition.position);
-                    if (distance > stopDistance)
-                    {
-                        agent.SetDestination(queuePosition.position);
-                    }
-                }
+                UpdateDestinationIfNeeded(); // Keep following queue position updates
                 break;
 
             case CustomerState.AtCounter:
-                // Wait for order
                 if (hasReceivedOrder)
                 {
                     StartLeaving();
@@ -88,6 +99,29 @@ public class CustomerOrderSystem : MonoBehaviour
         }
     }
 
+    // Check if the queue target Transform moved and update the agent's destination
+    void UpdateDestinationIfNeeded()
+    {
+        if (queuePosition == null || agent == null) return;
+
+        if (Time.time >= nextPositionCheck)
+        {
+            Vector3 currentTargetPosition = queuePosition.position;
+
+            // If the Transform's position changed since last time, update NavMeshAgent
+            if (Vector3.Distance(lastTargetPosition, currentTargetPosition) > 0.01f)
+            {
+                Debug.Log($"Queue position changed -> updating destination from {lastTargetPosition} to {currentTargetPosition}");
+                agent.isStopped = false; // ensure agent can move
+                agent.SetDestination(currentTargetPosition);
+                lastTargetPosition = currentTargetPosition;
+            }
+
+            nextPositionCheck = Time.time + positionCheckInterval;
+        }
+    }
+
+    // When walking to the queue, check if we've reached the current target
     void CheckArrivalAtQueue()
     {
         if (queuePosition == null) return;
@@ -95,10 +129,11 @@ public class CustomerOrderSystem : MonoBehaviour
         if (Vector3.Distance(transform.position, queuePosition.position) < stopDistance)
         {
             currentState = CustomerState.WaitingInQueue;
+            Debug.Log("Customer arrived at queue position.");
         }
     }
 
-    // Called when customer reaches the counter
+    // Called by QueueManager when this customer should be at the counter
     public void ArrivedAtCounter()
     {
         currentState = CustomerState.AtCounter;
@@ -106,48 +141,63 @@ public class CustomerOrderSystem : MonoBehaviour
         Debug.Log($"Customer arrived at counter. Order: {orderType}");
     }
 
-    // Called when player gives an item
+    // Player gives an item to the customer
     public void ReceiveOrder(GameObject orderItem)
     {
-        Debug.Log($"Received item: {orderItem.tag}, Expected: {orderType}");
+        if (orderItem == null)
+        {
+            Debug.LogWarning("ReceiveOrder called with null item.");
+            return;
+        }
 
-        // Check if correct item
+        Debug.Log($"Received item: {orderItem.tag}, expected: {orderType}");
+
+        // Check if the item matches the expected order
         if (orderItem.tag == orderType)
         {
-            Debug.Log("✓ Correct order. Customer leaving.");
+            Debug.Log("✓ Correct order. Customer will leave.");
 
             if (heldItem != null)
                 Destroy(heldItem);
 
-            orderItem.transform.SetParent(itemHoldPosition);
-            orderItem.transform.localPosition = Vector3.zero;
-            orderItem.transform.localRotation = Quaternion.identity;
+            if (itemHoldPosition != null)
+            {
+                orderItem.transform.SetParent(itemHoldPosition);
+                orderItem.transform.localPosition = Vector3.zero;
+                orderItem.transform.localRotation = Quaternion.identity;
+            }
 
             hasReceivedOrder = true;
             StartLeaving();
         }
         else
         {
-            Debug.Log($"✗ Wrong order! Wanted {orderType}");
+            Debug.Log($"✗ Wrong order. Expected {orderType}.");
+            // Note: current design keeps the customer at the counter until the correct item is given.
+            // If you want them to leave regardless, call StartLeaving() here as well.
         }
     }
 
+    // Begin leaving the store
     void StartLeaving()
     {
         Debug.Log("Customer leaving.");
         currentState = CustomerState.Leaving;
         isAtCounter = false;
 
+        if (agent == null) return;
+
         if (exitPosition != null)
         {
+            agent.isStopped = false;
             agent.SetDestination(exitPosition.position);
         }
         else
         {
-            Debug.LogError("⚠ Exit position not set!");
+            Debug.LogError("Exit position is not set!");
         }
 
-        // Notify QueueManager
+        // Notify QueueManager so others can move forward
         QueueManager queueManager = FindObjectOfType<QueueManager>();
         if (queueManager != null)
         {
@@ -155,6 +205,7 @@ public class CustomerOrderSystem : MonoBehaviour
         }
     }
 
+    // When leaving, check if we've reached the exit
     void CheckArrivalAtExit()
     {
         if (exitPosition == null) return;
@@ -165,13 +216,17 @@ public class CustomerOrderSystem : MonoBehaviour
         }
     }
 
-    // Debug: draw line to queue position
+    // Debug drawing in the Scene view
     void OnDrawGizmos()
     {
         if (queuePosition != null)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, queuePosition.position);
+
+            // Visualize the current target position
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(queuePosition.position, 0.3f);
         }
     }
 }

@@ -4,14 +4,15 @@ using UnityEngine;
 public class QueueManager : MonoBehaviour
 {
     [Header("Queue Settings")]
-    public Transform[] queuePositions; // Queue position points (set manually in scene)
+    public Transform[] queuePositions; // Queue points (set manually in the scene)
     public Transform counterPosition;  // Counter position
     public float moveDelay = 1f;       // Delay before queue moves after someone leaves
 
     [Header("Customer Spawning")]
-    public GameObject[] customerPrefabs; // Different customer prefabs
-    public Transform spawnPoint;         // Spawn position
-    public float spawnInterval = 5f;     // Time between spawns
+    public GameObject[] customerPrefabs; // Different types of customer prefabs
+    public Transform spawnPoint;         // Where customers appear
+    public float spawnInterval = 5f;     // Time between new customers
+    public int maxQueueSize = 5;        // Max number of customers (0 = unlimited)
 
     private List<CustomerOrderSystem> queue = new List<CustomerOrderSystem>();
     private float nextSpawnTime;
@@ -19,19 +20,31 @@ public class QueueManager : MonoBehaviour
     void Start()
     {
         nextSpawnTime = Time.time + spawnInterval;
+
+        // If maxQueueSize is 0, set it to unlimited
+        if (maxQueueSize == 0)
+        {
+            maxQueueSize = int.MaxValue;
+        }
     }
 
     void Update()
     {
-        // Spawn customers automatically
-        if (Time.time >= nextSpawnTime && queue.Count < queuePositions.Length)
+        // Total queue capacity = counter (1) + waiting spots
+        int maxCapacity = queuePositions.Length + 1;
+
+        // Use the smaller value between user-defined and actual capacity
+        int effectiveMax = Mathf.Min(maxCapacity, maxQueueSize);
+
+        // Spawn new customers automatically
+        if (Time.time >= nextSpawnTime && queue.Count < effectiveMax)
         {
             SpawnCustomer();
             nextSpawnTime = Time.time + spawnInterval;
         }
     }
 
-    // Spawn a new customer
+    // Create a new customer
     void SpawnCustomer()
     {
         if (customerPrefabs.Length == 0 || spawnPoint == null) return;
@@ -43,6 +56,7 @@ public class QueueManager : MonoBehaviour
         if (customer != null)
         {
             AddCustomerToQueue(customer);
+            Debug.Log($"New customer spawned. Total in queue: {queue.Count}");
         }
     }
 
@@ -61,12 +75,12 @@ public class QueueManager : MonoBehaviour
             Debug.Log($"Customer left the queue. Remaining: {queue.Count - 1}");
             queue.Remove(customer);
 
-            // Move others forward
+            // Move everyone forward
             UpdateQueue();
         }
     }
 
-    // Update all queue positions
+    // Update queue positions for all customers
     void UpdateQueue()
     {
         Debug.Log($"=== Updating queue. Count: {queue.Count} ===");
@@ -77,11 +91,11 @@ public class QueueManager : MonoBehaviour
 
             if (i == 0)
             {
-                // First customer → counter
+                // First customer goes to the counter
                 queue[i].queuePosition = counterPosition;
                 Debug.Log($"Customer {i}: assigned to counter");
 
-                // Check if already arrived
+                // If already at counter, mark it
                 float distance = Vector3.Distance(queue[i].transform.position, counterPosition.position);
                 if (distance < queue[i].stopDistance && !queue[i].isAtCounter)
                 {
@@ -91,18 +105,23 @@ public class QueueManager : MonoBehaviour
             }
             else if (i - 1 < queuePositions.Length)
             {
-                // Others → queue positions
+                // Others go to queue positions
                 queue[i].queuePosition = queuePositions[i - 1];
                 Debug.Log($"Customer {i}: assigned to {queuePositions[i - 1].name}");
             }
             else
             {
-                Debug.LogWarning($"Customer {i}: not enough queue positions!");
+                // If there are too many customers, place them at the last spot
+                Debug.LogWarning($"Customer {i}: exceeds queue capacity! Assigning to last position.");
+                if (queuePositions.Length > 0)
+                {
+                    queue[i].queuePosition = queuePositions[queuePositions.Length - 1];
+                }
             }
         }
     }
 
-    // Get the customer currently at the counter
+    // Get the first customer (the one at the counter)
     public CustomerOrderSystem GetCurrentCustomer()
     {
         if (queue.Count > 0 && queue[0] != null)
@@ -112,22 +131,39 @@ public class QueueManager : MonoBehaviour
         return null;
     }
 
-    // Draw queue positions in editor
+    // Draw helper gizmos in the editor
     void OnDrawGizmos()
     {
         if (queuePositions == null) return;
 
         Gizmos.color = Color.green;
-        foreach (Transform pos in queuePositions)
+        for (int i = 0; i < queuePositions.Length; i++)
         {
-            if (pos != null)
-                Gizmos.DrawWireSphere(pos.position, 0.3f);
+            if (queuePositions[i] != null)
+            {
+                Gizmos.DrawWireSphere(queuePositions[i].position, 0.3f);
+
+                // Show labels in the editor
+#if UNITY_EDITOR
+                UnityEditor.Handles.Label(
+                    queuePositions[i].position + Vector3.up * 0.5f,
+                    $"Queue {i + 1}"
+                );
+#endif
+            }
         }
 
         if (counterPosition != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(counterPosition.position, 0.5f);
+
+#if UNITY_EDITOR
+            UnityEditor.Handles.Label(
+                counterPosition.position + Vector3.up * 0.5f,
+                "Counter"
+            );
+#endif
         }
     }
 }
