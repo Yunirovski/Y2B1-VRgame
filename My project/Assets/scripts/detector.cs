@@ -1,21 +1,35 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SimpleDetector : MonoBehaviour
+public class OrderDeliveryDetector : MonoBehaviour
 {
-    public string tagName = "Goob"; // Tab
-    public GameObject customer;  // The customer
-    public Transform destination; // Where customer will go
+    [Header("Detection Settings")]
+    public string orderTag = "CompletedOrder"; // Tag used for delivered orders
 
-    // When something touches this
+    [Header("References")]
+    public QueueManager queueManager; // Reference to the QueueManager
+
+    // Called when an object enters the trigger zone
     void OnTriggerEnter(Collider other)
     {
-        // Is it the right tag?
-        if (other.CompareTag(tagName))
+        // Check if it's an order
+        if (other.CompareTag(orderTag))
         {
-            Debug.Log("Order is here!");
+            Debug.Log("Order placed in the delivery area!");
 
-            // Customer starts walking
-            customer.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(destination.position);
+            // Get the current customer at the counter (first in queue)
+            CustomerOrderSystem currentCustomer = queueManager.GetCurrentCustomer();
+
+            if (currentCustomer != null)
+            {
+                Debug.Log("Customer found — delivering order.");
+
+                // Give the order to the customer (triggers their leaving process)
+                currentCustomer.ReceiveOrder(other.gameObject);
+            }
+            else
+            {
+                Debug.Log("No customer at the counter right now.");
+            }
         }
     }
 }
