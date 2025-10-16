@@ -25,7 +25,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             if (!Used)
             {
-                if (other.gameObject == GameObject.FindWithTag("Empty")) {
+                if (other.gameObject == GameObject.FindWithTag("Empty")) 
+                {
                     Destroy(other.gameObject);
                     Instantiate(GoobFull, other.transform.position, Quaternion.identity);
                     Used = true;

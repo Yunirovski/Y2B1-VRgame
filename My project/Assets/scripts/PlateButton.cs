@@ -18,6 +18,6 @@ public class PlateButton : MonoBehaviour
 
     void OnButtonPressed(SelectEnterEventArgs args)
     {
-        Instantiate(Plate, new Vector3(1.48399997f, 1.02999997f, -5.70928907f), Quaternion.identity);
+        Instantiate(Plate, new Vector3(6.81647968f, 1.04572999f, -8.03367996f), Quaternion.identity);
     }
 }
