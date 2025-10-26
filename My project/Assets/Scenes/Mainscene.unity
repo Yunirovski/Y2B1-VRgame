@@ -1386,7 +1386,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &492564986
 Transform:
@@ -3735,6 +3735,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Goob
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7f6454c540d668c4e852888f2825d41f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5967,9 +5971,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paper_Plate_Brown_Goob_Mold_Full
       objectReference: {fileID: 0}
+    - target: {fileID: 3735321423003068689, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4079513215303775147, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3943
+      value: 3.023
       objectReference: {fileID: 0}
     - target: {fileID: 4079513215303775147, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6368,11 +6376,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 46c1f7dee04e3374eb4d96f0420f3936, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.20138
+      value: 3.879
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 46c1f7dee04e3374eb4d96f0420f3936, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.14484
+      value: -0.129
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 46c1f7dee04e3374eb4d96f0420f3936, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6413,6 +6421,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 46c1f7dee04e3374eb4d96f0420f3936, type: 3}
       propertyPath: m_Name
       value: '!!detector!!!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 46c1f7dee04e3374eb4d96f0420f3936, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7117,9 +7129,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paper_Plate_Brown_Goob_Mold_Full (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3735321423003068689, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4079513215303775147, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.5502
+      value: 3.161
       objectReference: {fileID: 0}
     - target: {fileID: 4079513215303775147, guid: 8265681838db15844b3d3d13208d80a4, type: 3}
       propertyPath: m_LocalPosition.y
