@@ -4,16 +4,27 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class MicrowaveButton : MonoBehaviour
 {
     public GameObject MicroPlate;
-    private bool unga = false;
+    public bool unga = false;
+    private GameObject plateog;
+    Vector3 PlatePos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
+        XRSimpleInteractable interactable = GetComponentInChildren<XRSimpleInteractable>();
 
         if (interactable != null)
         {
             interactable.selectEntered.AddListener(OnButtonPressed);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == GameObject.FindWithTag("Goob"))
+        {
+            unga = true;
+            plateog = other.gameObject;
+            PlatePos = other.transform.position;
         }
     }
 
@@ -21,18 +32,10 @@ public class MicrowaveButton : MonoBehaviour
     {
         if (unga == true)
         {
-            Instantiate(MicroPlate, new Vector3(6.81647968f, 1.04572999f, -8.03367996f), Quaternion.identity);
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject == GameObject.FindWithTag("Goob"))
-        {
-            unga = true;
-        }
-        else
-        {
+            Destroy(plateog);
+            Instantiate(MicroPlate, PlatePos, Quaternion.identity);
             unga = false;
         }
     }
+    
 }

@@ -1385,7 +1385,6 @@ GameObject:
   - component: {fileID: 479606088}
   - component: {fileID: 479606087}
   - component: {fileID: 479606086}
-  - component: {fileID: 479606090}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -1405,8 +1404,7 @@ Transform:
   m_LocalPosition: {x: -0.545, y: 0.278, z: -0.02}
   m_LocalScale: {x: 0.20063, y: 0.20063, z: 0.20063}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1305665773}
+  m_Children: []
   m_Father: {fileID: 583199344222518263}
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
 --- !u!65 &479606086
@@ -1584,19 +1582,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: -0.12689154, z: 0}
     m_Extent: {x: 0.29382125, y: 0.22890271, z: 0.29382125}
   m_DirtyAABB: 0
---- !u!114 &479606090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479606084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7662befb497b3da4c990b5163d6cc015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MicrowaveButton
-  MicroPlate: {fileID: 9209293860830658657, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
 --- !u!1 &492564985
 GameObject:
   m_ObjectHideFlags: 0
@@ -4641,12 +4626,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305665772}
   serializedVersion: 2
-  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: 0.11962254, y: 0.6529435, z: -0.059814483}
-  m_LocalScale: {x: 1.8900843, y: 1.2321808, z: 1.4945599}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.52100015, y: 0.14699996, z: -0.00799942}
+  m_LocalScale: {x: 0.37920758, y: 0.24721244, z: 0.29985353}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 479606085}
+  m_Father: {fileID: 583199344222518263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1305665774
 MonoBehaviour:
@@ -7763,6 +7748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 583199344222518263}
   - component: {fileID: 583199344222518264}
+  - component: {fileID: 583199344222518265}
   m_Layer: 0
   m_Name: microwave
   m_TagString: Untagged
@@ -7787,6 +7773,7 @@ Transform:
   - {fileID: 479606085}
   - {fileID: 3108170241237201168}
   - {fileID: 212234403747844319}
+  - {fileID: 1305665773}
   m_Father: {fileID: 1297034693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &583199344222518264
@@ -7816,6 +7803,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &583199344222518265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242103776736960845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7662befb497b3da4c990b5163d6cc015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MicrowaveButton
+  MicroPlate: {fileID: 9209293860830658657, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
+  unga: 0
 --- !u!33 &626299262029696245
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8106,6 +8107,10 @@ GameObject:
   - component: {fileID: 6141580989963236416}
   - component: {fileID: 3543309295081904931}
   - component: {fileID: 3565126745481634070}
+  - component: {fileID: 7060988078410411927}
+  - component: {fileID: 7060988078410411930}
+  - component: {fileID: 7060988078410411929}
+  - component: {fileID: 7060988078410411928}
   m_Layer: 0
   m_Name: base
   m_TagString: Untagged
@@ -8113,6 +8118,90 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+--- !u!65 &7060988078410411927
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060988078410411925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.44, y: 0.022486895, z: 0.31199294}
+  m_Center: {x: -0.02256599, y: 0.116491675, z: -0.014575541}
+--- !u!65 &7060988078410411928
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060988078410411925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.083144546, y: 0.2826898, z: 0.31422645}
+  m_Center: {x: -0.20099372, y: -0.013609782, z: -0.013458788}
+--- !u!65 &7060988078410411929
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060988078410411925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.44, y: 0.020189285, z: 0.3160737}
+  m_Center: {x: -0.02256599, y: -0.10499476, z: -0.012535155}
+--- !u!65 &7060988078410411930
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060988078410411925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.014902651, y: 0.2826898, z: 0.3127659}
+  m_Center: {x: 0.18998268, y: -0.013609782, z: -0.0141890645}
 --- !u!23 &8243289780489904758
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8383,63 +8472,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890818517700421515}
   m_Mesh: {fileID: 8393969432434051992, guid: 2dd5e9057c005e74a9da0f195564df26, type: 3}
---- !u!1001 &8719106102630963233
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.3085976
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.049014
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.371
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396446202241948379, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209293860830658657, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-      propertyPath: m_Name
-      value: Paper_Plate_Brown_Goob_Mold_Full_Microd
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
 --- !u!4 &9211044277354988764
 Transform:
   m_ObjectHideFlags: 0
@@ -8467,4 +8499,3 @@ SceneRoots:
   - {fileID: 964078168}
   - {fileID: 568991422}
   - {fileID: 1592559274}
-  - {fileID: 8719106102630963233}
