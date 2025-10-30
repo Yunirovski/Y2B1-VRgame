@@ -42,6 +42,30 @@ public class QueueManager : MonoBehaviour
             SpawnCustomer();
             nextSpawnTime = Time.time + spawnInterval;
         }
+
+        // Check if first customer has arrived at counter
+        CheckFirstCustomerArrival();
+    }
+
+    // Check if the first customer in queue has reached the counter
+    void CheckFirstCustomerArrival()
+    {
+        if (queue.Count > 0 && queue[0] != null && counterPosition != null)
+        {
+            CustomerOrderSystem firstCustomer = queue[0];
+
+            // If customer is assigned to counter but not marked as at counter
+            if (firstCustomer.queuePosition == counterPosition && !firstCustomer.isAtCounter)
+            {
+                float distance = Vector3.Distance(firstCustomer.transform.position, counterPosition.position);
+
+                if (distance < firstCustomer.stopDistance)
+                {
+                    firstCustomer.ArrivedAtCounter();
+                    Debug.Log($"First customer arrived at counter (distance: {distance:F2})");
+                }
+            }
+        }
     }
 
     // Create a new customer
@@ -95,13 +119,8 @@ public class QueueManager : MonoBehaviour
                 queue[i].queuePosition = counterPosition;
                 Debug.Log($"Customer {i}: assigned to counter");
 
-                // If already at counter, mark it
-                float distance = Vector3.Distance(queue[i].transform.position, counterPosition.position);
-                if (distance < queue[i].stopDistance && !queue[i].isAtCounter)
-                {
-                    queue[i].ArrivedAtCounter();
-                    Debug.Log($"Customer {i}: arrived at counter");
-                }
+                // Don't immediately call ArrivedAtCounter here
+                // Let the Update() loop check distance continuously
             }
             else if (i - 1 < queuePositions.Length)
             {
