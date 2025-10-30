@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CustomerTimer : MonoBehaviour
 {
@@ -6,45 +6,80 @@ public class CustomerTimer : MonoBehaviour
 
     private float timer;
     private CustomerOrderSystem customer;
-    private bool counting = false;
-    private bool alreadyCounted = false;  // Prevent double counting
+    private bool timerRunning = false;
+    private bool counted = false;
+    private bool wasAtCounter = false;
 
     void Start()
     {
         customer = GetComponent<CustomerOrderSystem>();
         timer = waitTime;
+        Debug.Log("=== NEW CUSTOMER SPAWNED ===");
     }
 
     void Update()
     {
-        // Start counting when at counter
-        if (customer.isAtCounter && !alreadyCounted)
+        if (customer == null)
         {
-            if (!counting)
-            {
-                counting = true;
-                timer = waitTime;  // Reset to 30 seconds
-            }
+            Debug.LogError("Customer is NULL!");
+            return;
+        }
 
-            timer -= Time.deltaTime;  // Count down
-            GameStatsManager.UpdateTimer(timer);  // Show on UI
+        if (counted)
+        {
+            return;  // Already counted this customer
+        }
 
-            // Check if received order (SUCCESS - count immediately)
+        // Debug current state
+        if (Time.frameCount % 60 == 0)  // Every 60 frames
+        {
+            Debug.Log($"State: isAtCounter={customer.isAtCounter}, hasReceivedOrder={customer.hasReceivedOrder}, timerRunning={timerRunning}, timer={timer:F1}");
+        }
+
+        // Detect when customer arrives at counter
+        if (customer.isAtCounter && !wasAtCounter)
+        {
+            wasAtCounter = true;
+            timerRunning = true;
+            timer = waitTime;
+            Debug.Log(">>> TIMER STARTED: " + waitTime + "s");
+        }
+
+        // Timer is running
+        if (timerRunning)
+        {
+            timer -= Time.deltaTime;
+            GameStatsManager.UpdateTimer(timer);
+
+            // Check if order received
             if (customer.hasReceivedOrder)
             {
-                GameStatsManager.AddCompletedOrder();
-                alreadyCounted = true;
-                counting = false;
-                return;  // Stop here, don't check timeout
+                Debug.Log($"!!! hasReceivedOrder is TRUE, timer={timer:F1}");
+
+                if (timer > 0)
+                {
+                    Debug.Log(">>> CALLING AddCompletedOrder()");
+                    GameStatsManager.AddCompletedOrder();
+                    counted = true;
+                    timerRunning = false;
+                    Debug.Log($"✓✓✓ ORDER COMPLETED! Total now: {GameStatsManager.totalOrdersCompleted}");
+                }
+                else
+                {
+                    Debug.Log(">>> Order received but timer already at 0");
+                }
+                return;
             }
 
-            // Time's up (TIMEOUT)
+            // Time ran out
             if (timer <= 0)
             {
+                Debug.Log(">>> TIMER EXPIRED - Customer timed out");
                 GameStatsManager.AddTimedOutCustomer();
-                customer.hasReceivedOrder = true;  // Force leave
-                alreadyCounted = true;
-                counting = false;
+                customer.hasReceivedOrder = true;
+                counted = true;
+                timerRunning = false;
+                Debug.Log($"✗✗✗ TIMED OUT! Total now: {GameStatsManager.totalCustomersTimedOut}");
             }
         }
     }
