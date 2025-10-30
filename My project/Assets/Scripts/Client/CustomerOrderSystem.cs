@@ -198,7 +198,7 @@ public class CustomerOrderSystem : MonoBehaviour
         }
 
         // Notify QueueManager so others can move forward
-        QueueManager queueManager = FindObjectOfType<QueueManager>();
+        QueueManager queueManager = FindFirstObjectByType<QueueManager>();
         if (queueManager != null)
         {
             queueManager.CustomerLeft(this);

@@ -5398,7 +5398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerOrderSystem
   heldItem: {fileID: 0}
   itemHoldPosition: {fileID: 0}
-  orderType: Goob
+  orderType: GoobMicro
   queuePosition: {fileID: 0}
   exitPosition: {fileID: 1131739336}
   stopDistance: 0.1
