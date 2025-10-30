@@ -3,68 +3,33 @@
 public class OrderDeliveryDetector : MonoBehaviour
 {
     [Header("Detection Settings")]
-    public string orderTag = "Goob"; // Tag for order items
+    public string orderTag = "Goob"; // Tag used for delivered orders
 
     [Header("References")]
-    public QueueManager queueManager;
-    public Transform targetPosition; // Where item moves to
+    public QueueManager queueManager; // Reference to the QueueManager
 
-    [Header("Movement Settings")]
-    public float moveSpeed = 2f; // How fast item moves
-
-    private GameObject movingItem; // The item currently moving
-    private bool isMoving = false; // Is an item moving right now?
-
-    void Update()
-    {
-        // Move item to target
-        if (isMoving && movingItem != null)
-        {
-            movingItem.transform.position = Vector3.MoveTowards(
-                movingItem.transform.position,
-                targetPosition.position,
-                moveSpeed * Time.deltaTime
-            );
-
-            // Check if arrived
-            float distance = Vector3.Distance(movingItem.transform.position, targetPosition.position);
-            if (distance < 0.1f)
-            {
-                DeliverOrder();
-            }
-        }
-    }
-
+    // Called when an object enters the trigger zone
     void OnTriggerEnter(Collider other)
     {
-        // Check if it's an order and nothing is moving
-        if (other.CompareTag(orderTag) && !isMoving)
+        // Check if it's an order
+        if (other.CompareTag(orderTag))
         {
-            movingItem = other.gameObject;
-            isMoving = true;
+            Debug.Log("Order placed in the delivery area!");
 
-            // Disable physics
-            Rigidbody rb = movingItem.GetComponent<Rigidbody>();
-            if (rb != null)
+            // Get the current customer at the counter (first in queue)
+            CustomerOrderSystem currentCustomer = queueManager.GetCurrentCustomer();
+
+            if (currentCustomer != null)
             {
-                rb.isKinematic = true;
+                Debug.Log("Customer found — delivering order.");
+
+                // Give the order to the customer (triggers their leaving process)
+                currentCustomer.ReceiveOrder(other.gameObject);
+            }
+            else
+            {
+                Debug.Log("No customer at the counter right now.");
             }
         }
-    }
-
-    void DeliverOrder()
-    {
-        // Get current customer
-        CustomerOrderSystem customer = queueManager.GetCurrentCustomer();
-
-        if (customer != null)
-        {
-            customer.ReceiveOrder(movingItem);
-        }
-
-        // Destroy item and reset
-        Destroy(movingItem);
-        movingItem = null;
-        isMoving = false;
     }
 }
