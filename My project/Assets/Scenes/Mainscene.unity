@@ -420,6 +420,8 @@ MonoBehaviour:
   ordersCompletedText: {fileID: 1751894701}
   customersTimedOutText: {fileID: 1906299}
   timerText: {fileID: 872786818}
+  totalCustomersText: {fileID: 478117479}
+  queueManager: {fileID: 1430385505}
 --- !u!4 &125928788
 Transform:
   m_ObjectHideFlags: 0
@@ -6274,6 +6276,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 425389266}
   spawnInterval: 5
   maxQueueSize: 5
+  unlimitedMode: 0
+  totalCustomersToSpawn: 10
+  customersSpawned: 0
 --- !u!1001 &1444777009
 PrefabInstance:
   m_ObjectHideFlags: 0

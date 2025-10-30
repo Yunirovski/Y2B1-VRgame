@@ -7,10 +7,16 @@ public class GameStatsManager : MonoBehaviour
     public TextMeshProUGUI ordersCompletedText;   // Display total completed orders
     public TextMeshProUGUI customersTimedOutText; // Display total timed out customers
     public TextMeshProUGUI timerText;             // Display current customer timer
+    public TextMeshProUGUI totalCustomersText;  // Display total customers to spawn
+
+    [Header("References")]
+    public QueueManager queueManager;             // Drag your QueueManager here!
 
     // Global statistics
     public static int totalOrdersCompleted = 0;
     public static int totalCustomersTimedOut = 0;
+    public static int customersSpawnedCount = 10;
+
     private static TextMeshProUGUI staticTimerText;
 
     void Start()
@@ -29,6 +35,11 @@ public class GameStatsManager : MonoBehaviour
         if (customersTimedOutText != null)
         {
             customersTimedOutText.text = "Timed Out: " + totalCustomersTimedOut;
+        }
+        if (totalCustomersText != null && queueManager != null)
+        {
+            int remaining = queueManager.totalCustomersToSpawn - queueManager.customersSpawned;
+            totalCustomersText.text = "Remaining: " + remaining;
         }
     }
 
