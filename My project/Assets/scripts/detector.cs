@@ -3,7 +3,7 @@
 public class OrderDeliveryDetector : MonoBehaviour
 {
     [Header("Detection Settings")]
-    public string orderTag = "CompletedOrder"; // Tag used for delivered orders
+    public string orderTag = "Goob"; // Tag used for delivered orders
 
     [Header("References")]
     public QueueManager queueManager; // Reference to the QueueManager
