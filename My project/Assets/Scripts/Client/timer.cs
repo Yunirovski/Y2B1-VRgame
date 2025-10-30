@@ -2,7 +2,7 @@
 
 public class CustomerTimer : MonoBehaviour
 {
-    public float waitTime = 30f;  // Wait time in seconds
+    public float waitTime = 10f;  // Wait time in seconds
 
     private float timer;
     private CustomerOrderSystem customer;

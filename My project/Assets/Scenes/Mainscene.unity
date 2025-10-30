@@ -6888,7 +6888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81f27207ce488a44a820d864eb825db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerTimer
-  waitTime: 30
+  waitTime: 10
 --- !u!1 &1574658069 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 31f0a787e7ac86542a28c7ed5a462578, type: 3}
