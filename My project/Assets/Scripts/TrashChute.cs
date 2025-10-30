@@ -11,6 +11,9 @@ public class TrashChute : MonoBehaviour
     public UnityEvent OnEnterTrigger;
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
+        if (!other.gameObject == GameObject.FindWithTag("Player"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
