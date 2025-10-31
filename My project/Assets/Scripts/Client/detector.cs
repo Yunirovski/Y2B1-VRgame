@@ -6,7 +6,8 @@ public class OrderDeliveryDetector : MonoBehaviour
     public string orderTag = "Goob"; // Tag used for delivered orders
 
     [Header("References")]
-    public QueueManager queueManager; // Reference to the QueueManager
+    public QueueManager_Human humanQueueManager;  // Reference to Human queue
+    public QueueManager_Robot robotQueueManager;  // Reference to Robot queue
 
     // Called when an object enters the trigger zone
     void OnTriggerEnter(Collider other)
@@ -16,19 +17,28 @@ public class OrderDeliveryDetector : MonoBehaviour
         {
             Debug.Log("Order placed in the delivery area!");
 
-            // Get the current customer at the counter (first in queue)
-            CustomerOrderSystem currentCustomer = queueManager.GetCurrentCustomer();
+            // Try Human queue first
+            CustomerOrderSystem currentCustomer = null;
+
+            if (humanQueueManager != null)
+            {
+                currentCustomer = humanQueueManager.GetCurrentCustomer();
+            }
+
+            // If no Human customer, try Robot queue
+            if (currentCustomer == null && robotQueueManager != null)
+            {
+                currentCustomer = robotQueueManager.GetCurrentCustomer();
+            }
 
             if (currentCustomer != null)
             {
                 Debug.Log("Customer found — delivering order.");
-
-                // Give the order to the customer (triggers their leaving process)
                 currentCustomer.ReceiveOrder(other.gameObject);
             }
             else
             {
-                Debug.Log("No customer at the counter right now.");
+                Debug.Log("No customer at either counter right now.");
             }
         }
     }

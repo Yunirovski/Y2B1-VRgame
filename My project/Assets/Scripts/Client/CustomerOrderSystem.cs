@@ -32,6 +32,7 @@ public class CustomerOrderSystem : MonoBehaviour
     private CustomerState currentState;
     private float nextPositionCheck;
     private Vector3 lastTargetPosition;      // Last target position we set on the agent
+    private Transform lastQueuePosition;     // Track last assigned queue position
 
     private enum CustomerState
     {
@@ -59,6 +60,7 @@ public class CustomerOrderSystem : MonoBehaviour
         currentState = CustomerState.MovingToQueue;
         nextPositionCheck = Time.time;
         lastTargetPosition = Vector3.zero;
+        lastQueuePosition = null;
 
         // Set order type from the held item's tag and attach the item to the hand
         if (heldItem != null)
@@ -77,21 +79,30 @@ public class CustomerOrderSystem : MonoBehaviour
         if (queuePosition != null)
         {
             lastTargetPosition = queuePosition.position;
+            lastQueuePosition = queuePosition;
             agent.SetDestination(queuePosition.position);
         }
     }
 
     void Update()
     {
+        // Check if queue position changed - if so, start moving again
+        if (queuePosition != lastQueuePosition)
+        {
+            lastQueuePosition = queuePosition;
+            currentState = CustomerState.MovingToQueue;
+            Debug.Log($"Queue position changed! Back to moving. New target: {queuePosition.name}");
+        }
+
         switch (currentState)
         {
             case CustomerState.MovingToQueue:
                 CheckArrivalAtQueue();
-                UpdateDestinationIfNeeded(); // Keep following queue position updates
+                UpdateDestinationIfNeeded();
                 break;
 
             case CustomerState.WaitingInQueue:
-                UpdateDestinationIfNeeded(); // Keep following queue position updates
+                UpdateDestinationIfNeeded();
                 break;
 
             case CustomerState.AtCounter:
@@ -119,8 +130,8 @@ public class CustomerOrderSystem : MonoBehaviour
             // If the Transform's position changed since last time, update NavMeshAgent
             if (Vector3.Distance(lastTargetPosition, currentTargetPosition) > 0.01f)
             {
-                Debug.Log($"Queue position changed -> updating destination from {lastTargetPosition} to {currentTargetPosition}");
-                agent.isStopped = false; // ensure agent can move
+                Debug.Log($"Queue position moved -> updating destination from {lastTargetPosition} to {currentTargetPosition}");
+                agent.isStopped = false;
                 agent.SetDestination(currentTargetPosition);
                 lastTargetPosition = currentTargetPosition;
             }
@@ -181,8 +192,6 @@ public class CustomerOrderSystem : MonoBehaviour
         else
         {
             Debug.Log($"✗ Wrong order. Expected {orderType}.");
-            // Note: current design keeps the customer at the counter until the correct item is given.
-            // If you want them to leave regardless, call StartLeaving() here as well.
         }
     }
 
@@ -206,10 +215,16 @@ public class CustomerOrderSystem : MonoBehaviour
         }
 
         // Notify QueueManager so others can move forward
-        QueueManager queueManager = FindFirstObjectByType<QueueManager>();
-        if (queueManager != null)
+        QueueManager_Human humanQueue = FindFirstObjectByType<QueueManager_Human>();
+        if (humanQueue != null)
         {
-            queueManager.CustomerLeft(this);
+            humanQueue.CustomerLeft(this);
+        }
+
+        QueueManager_Robot robotQueue = FindFirstObjectByType<QueueManager_Robot>();
+        if (robotQueue != null)
+        {
+            robotQueue.CustomerLeft(this);
         }
     }
 
@@ -232,7 +247,6 @@ public class CustomerOrderSystem : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, queuePosition.position);
 
-            // Visualize the current target position
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(queuePosition.position, 0.3f);
         }
