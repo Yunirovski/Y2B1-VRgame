@@ -11,7 +11,8 @@ public class GameStatsManager : MonoBehaviour
     public TextMeshProUGUI totalCustomersText;    // Display total customers to spawn
 
     [Header("References")]
-    public QueueManager queueManager;             // Drag your QueueManager here!
+    public QueueManager_Human humanQueueManager;  // Human queue reference
+    public QueueManager_Robot robotQueueManager;  // Robot queue reference
 
     // Global statistics
     public static int totalOrdersCompleted = 0;
@@ -39,10 +40,11 @@ public class GameStatsManager : MonoBehaviour
         {
             customersTimedOutText.text = "Timed Out: " + totalCustomersTimedOut;
         }
-        if (totalCustomersText != null && queueManager != null)
+        if (totalCustomersText != null)
         {
-            int remaining = queueManager.totalCustomersToSpawn - queueManager.customersSpawned;
-            totalCustomersText.text = "Remaining: " + remaining;
+            int humanRemaining = humanQueueManager != null ? humanQueueManager.totalCustomersToSpawn - humanQueueManager.customersSpawned : 0;
+            int robotRemaining = robotQueueManager != null ? robotQueueManager.totalCustomersToSpawn - robotQueueManager.customersSpawned : 0;
+            totalCustomersText.text = "Human: " + humanRemaining + " | Robot: " + robotRemaining;
         }
     }
 
