@@ -49,7 +49,12 @@ public class CustomerTimer : MonoBehaviour
         if (timerRunning)
         {
             timer -= Time.deltaTime;
-            GameStatsManager.UpdateTimer(timer);
+
+            // 根据顾客类型更新对应的 timer
+            if (customer.customerType == CustomerOrderSystem.CustomerType.Human)
+                GameStatsManager.UpdateTimer_Human(timer);
+            else
+                GameStatsManager.UpdateTimer_Robot(timer);
 
             // Check if order received
             if (customer.hasReceivedOrder)

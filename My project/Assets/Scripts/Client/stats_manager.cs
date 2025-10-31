@@ -6,8 +6,9 @@ public class GameStatsManager : MonoBehaviour
     [Header("UI Display")]
     public TextMeshProUGUI ordersCompletedText;   // Display total completed orders
     public TextMeshProUGUI customersTimedOutText; // Display total timed out customers
-    public TextMeshProUGUI timerText;             // Display current customer timer
-    public TextMeshProUGUI totalCustomersText;  // Display total customers to spawn
+    public TextMeshProUGUI timerText_Human;       // Display Human customer timer
+    public TextMeshProUGUI timerText_Robot;       // Display Robot customer timer
+    public TextMeshProUGUI totalCustomersText;    // Display total customers to spawn
 
     [Header("References")]
     public QueueManager queueManager;             // Drag your QueueManager here!
@@ -17,11 +18,13 @@ public class GameStatsManager : MonoBehaviour
     public static int totalCustomersTimedOut = 0;
     public static int customersSpawnedCount = 10;
 
-    private static TextMeshProUGUI staticTimerText;
+    private static TextMeshProUGUI staticTimerText_Human;
+    private static TextMeshProUGUI staticTimerText_Robot;
 
     void Start()
     {
-        staticTimerText = timerText;
+        staticTimerText_Human = timerText_Human;
+        staticTimerText_Robot = timerText_Robot;
     }
 
     void Update()
@@ -43,12 +46,21 @@ public class GameStatsManager : MonoBehaviour
         }
     }
 
-    // Update timer display
-    public static void UpdateTimer(float timeRemaining)
+    // Update Human timer display
+    public static void UpdateTimer_Human(float timeRemaining)
     {
-        if (staticTimerText != null)
+        if (staticTimerText_Human != null)
         {
-            staticTimerText.text = Mathf.Ceil(timeRemaining).ToString() + "s";
+            staticTimerText_Human.text = Mathf.Ceil(timeRemaining).ToString() + "s";
+        }
+    }
+
+    // Update Robot timer display
+    public static void UpdateTimer_Robot(float timeRemaining)
+    {
+        if (staticTimerText_Robot != null)
+        {
+            staticTimerText_Robot.text = Mathf.Ceil(timeRemaining).ToString() + "s";
         }
     }
 
