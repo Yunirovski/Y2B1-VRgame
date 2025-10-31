@@ -19,7 +19,7 @@ public class QueueManager_Human : MonoBehaviour
     public int totalCustomersToSpawn = 10; // How many customers in total
 
     // Internal variables
-    private List<CustomerOrderSystem> queue = new List<CustomerOrderSystem>();
+    public List<CustomerOrderSystem> queue = new List<CustomerOrderSystem>();
     private float nextSpawnTime;
     public int customersSpawned = 0; // Counter for spawned customers
 
@@ -72,24 +72,28 @@ public class QueueManager_Human : MonoBehaviour
     {
         if (customerPrefabs.Length == 0 || spawnPoint == null) return;
 
-        GameObject prefab = customerPrefabs[Random.Range(0, customerPrefabs.Length)];
-        GameObject newCustomer = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+        // Keep spawning until we get a Human type customer
+        CustomerOrderSystem customer = null;
 
-        CustomerOrderSystem customer = newCustomer.GetComponent<CustomerOrderSystem>();
-        if (customer != null)
+        while (customer == null || customer.customerType != CustomerOrderSystem.CustomerType.Human)
         {
-            // Only add if Human type
-            if (customer.customerType == CustomerOrderSystem.CustomerType.Human)
+            GameObject prefab = customerPrefabs[Random.Range(0, customerPrefabs.Length)];
+            GameObject newCustomer = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+
+            customer = newCustomer.GetComponent<CustomerOrderSystem>();
+
+            if (customer == null || customer.customerType != CustomerOrderSystem.CustomerType.Human)
             {
-                AddCustomerToQueue(customer);
-                customersSpawned++;
-                Debug.Log($"Human customer spawned. Total: {customersSpawned}/{totalCustomersToSpawn}");
-            }
-            else
-            {
-                Destroy(newCustomer);
+                if (newCustomer != null)
+                    Destroy(newCustomer);
+                customer = null;
             }
         }
+
+        // Now we have a confirmed Human customer
+        AddCustomerToQueue(customer);
+        customersSpawned++;
+        Debug.Log($"Human customer spawned. Total: {customersSpawned}/{totalCustomersToSpawn}");
     }
 
     public void AddCustomerToQueue(CustomerOrderSystem customer)
