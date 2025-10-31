@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-public class MicrowaveButton : MonoBehaviour
+
+public class SpiceButton : MonoBehaviour
 {
-    public GameObject MicroPlate;
-    private bool Funga = false;
+    public GameObject SpicePlate;
+    private bool unga = false;
     private GameObject plateog;
     Vector3 PlatePos;
     Quaternion PlateRot;
@@ -12,18 +13,25 @@ public class MicrowaveButton : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        XRSimpleInteractable interactable = GetComponentInChildren<XRSimpleInteractable>();
+        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
 
         if (interactable != null)
         {
             interactable.selectEntered.AddListener(OnButtonPressed);
         }
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Goob"))
-            {
-            Funga = true;
+        if (other.CompareTag("GoobMicro"))
+        {
+            Debug.Log("OBJECT ENTER");
+            unga = true;
             plateog = other.gameObject;
             PlatePos = other.transform.position;
             PlateRot = other.transform.rotation;
@@ -32,12 +40,11 @@ public class MicrowaveButton : MonoBehaviour
 
     void OnButtonPressed(SelectEnterEventArgs args)
     {
-        if (Funga == true)
+        if (unga)
         {
             Destroy(plateog);
-            Instantiate(MicroPlate, PlatePos, PlateRot);
-            Funga = false;
+            Instantiate(SpicePlate, PlatePos, PlateRot);
+            unga = false;
         }
     }
-    
 }

@@ -1358,8 +1358,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.58764243, y: 0.4578053, z: 0.5876424}
-  m_Center: {x: 0.0000038146973, y: -0.12689151, z: 0.00000047683716}
+  m_Size: {x: 0.58764243, y: 0.39604062, z: 0.5876424}
+  m_Center: {x: 0.0000038064325, y: -0.15777388, z: 0.00000048276706}
 --- !u!114 &479606087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1899,7 +1899,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0863bc3fee3b4984cbaf0c11043e4b22, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2008376576}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -6733177361254619370, guid: 0863bc3fee3b4984cbaf0c11043e4b22, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 898296395}
   m_SourcePrefab: {fileID: 100100000, guid: 0863bc3fee3b4984cbaf0c11043e4b22, type: 3}
 --- !u!4 &531618033 stripped
 Transform:
@@ -3680,6 +3683,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 712514303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &898296391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6733177361254619370, guid: 0863bc3fee3b4984cbaf0c11043e4b22, type: 3}
+  m_PrefabInstance: {fileID: 531618032}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &898296395
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898296391}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8691780276856062721, guid: 0863bc3fee3b4984cbaf0c11043e4b22, type: 3}
 --- !u!1001 &900717801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5334,77 +5364,6 @@ Transform:
   - {fileID: 531618033}
   m_Father: {fileID: 1058325626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1305665772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1305665773}
-  - component: {fileID: 1305665775}
-  - component: {fileID: 1305665774}
-  m_Layer: 0
-  m_Name: Box Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1305665773
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305665772}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.52100015, y: 0.14699996, z: -0.00799942}
-  m_LocalScale: {x: 0.37920758, y: 0.24721244, z: 0.29985353}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 583199344222518263}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1305665774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305665772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 0
-  priority: 0
-  blendDistance: 0.04
-  weight: 1
-  sharedProfile: {fileID: 0}
---- !u!65 &1305665775
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305665772}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.89713, y: 0.7544379, z: 1}
-  m_Center: {x: 0.0225462, y: -0.055260908, z: 0}
 --- !u!1 &1311558335
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,7 +6962,8 @@ GameObject:
   - component: {fileID: 1776603663}
   - component: {fileID: 1776603662}
   - component: {fileID: 1776603661}
-  - component: {fileID: 1776603660}
+  - component: {fileID: 1776603665}
+  - component: {fileID: 1776603666}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -7026,19 +6986,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 531618033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1776603660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776603658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9e543c10d4f3f46945e7fb0b9a0ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlateButton
-  Plate: {fileID: 8239657029771945257, guid: 6d6e53b64efe65548b6f6645c0f328d4, type: 3}
 --- !u!65 &1776603661
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7214,6 +7161,40 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: -0.12689154, z: 0}
     m_Extent: {x: 0.29382125, y: 0.22890271, z: 0.29382125}
   m_DirtyAABB: 0
+--- !u!114 &1776603665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776603658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7662befb497b3da4c990b5163d6cc015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MicrowaveButton
+  MicroPlate: {fileID: 5166589890231806301, guid: e82de4731ab34154593c696d7d758205, type: 3}
+--- !u!65 &1776603666
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776603658}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5925198, y: 1.9698218, z: 1.1214508}
+  m_Center: {x: -1.7288545, y: 0.37727672, z: -1.2772502}
 --- !u!1 &1787175560
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,7 +7983,8 @@ GameObject:
   - component: {fileID: 2008376580}
   - component: {fileID: 2008376579}
   - component: {fileID: 2008376578}
-  - component: {fileID: 2008376577}
+  - component: {fileID: 2008376582}
+  - component: {fileID: 2008376583}
   m_Layer: 0
   m_Name: Circle (1)
   m_TagString: Untagged
@@ -8025,19 +8007,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 531618033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2008376577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008376575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9e543c10d4f3f46945e7fb0b9a0ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlateButton
-  Plate: {fileID: 8239657029771945257, guid: 6d6e53b64efe65548b6f6645c0f328d4, type: 3}
 --- !u!65 &2008376578
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8057,8 +8026,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.58764243, y: 0.4578053, z: 0.5876424}
-  m_Center: {x: 0.0000038146973, y: -0.12689151, z: 0.00000047683716}
+  m_Size: {x: 0.5399545, y: 0.4578053, z: 0.5876424}
+  m_Center: {x: -0.0055710473, y: -0.12689152, z: 0.0000004656613}
 --- !u!114 &2008376579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8213,6 +8182,40 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: -0.12689154, z: 0}
     m_Extent: {x: 0.29382125, y: 0.22890271, z: 0.29382125}
   m_DirtyAABB: 0
+--- !u!114 &2008376582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008376575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6062e3825d7dffa4080cf2b832ee0339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpiceButton
+  SpicePlate: {fileID: 3644774385012198163, guid: cf0995ba698a6bc4bab71703d3c892d7, type: 3}
+--- !u!65 &2008376583
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008376575}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.337702, y: 2.0171323, z: 1.0638273}
+  m_Center: {x: 1.8073399, y: 0.2736797, z: -1.2792828}
 --- !u!1 &2057274353 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5233112405309087440, guid: 6c684b1590212414ba56915d774f8d86, type: 3}
@@ -8356,7 +8359,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2058540101}
   - component: {fileID: 2058540103}
-  - component: {fileID: 2058540102}
   m_Layer: 0
   m_Name: MachineVolume
   m_TagString: Untagged
@@ -8379,23 +8381,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 682327984}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 80}
---- !u!114 &2058540102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058540100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 0
-  priority: 0
-  blendDistance: 0.1
-  weight: 1
-  sharedProfile: {fileID: 0}
 --- !u!65 &2058540103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8632,8 +8617,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 583199344222518263}
-  - component: {fileID: 583199344222518264}
   - component: {fileID: 583199344222518265}
+  - component: {fileID: 583199344222518266}
   m_Layer: 0
   m_Name: microwave
   m_TagString: Untagged
@@ -8691,36 +8676,8 @@ Transform:
   - {fileID: 479606085}
   - {fileID: 3108170241237201168}
   - {fileID: 212234403747844319}
-  - {fileID: 1305665773}
   m_Father: {fileID: 1297034693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &583199344222518264
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242103776736960845}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &583199344222518265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8734,7 +8691,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MicrowaveButton
   MicroPlate: {fileID: 9209293860830658657, guid: c254cc32476ddec449ed5032e40b774e, type: 3}
-  unga: 0
+--- !u!65 &583199344222518266
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242103776736960845}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3989625, y: 0.2246449, z: 0.29265594}
+  m_Center: {x: -0.5238836, y: 0.14448333, z: -0.0037527084}
 --- !u!33 &626299262029696245
 MeshFilter:
   m_ObjectHideFlags: 0
