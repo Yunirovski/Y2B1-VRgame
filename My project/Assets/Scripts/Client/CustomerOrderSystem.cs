@@ -10,6 +10,14 @@ public class CustomerOrderSystem : MonoBehaviour
     [Header("Order Type")]
     public string orderType;                 // Order type (taken from heldItem.tag)
 
+    public CustomerType customerType;
+
+    public enum CustomerType
+    {
+        Human,
+        Robot
+    }
+
     [Header("Movement")]
     public Transform queuePosition;          // Assigned by QueueManager
     public Transform exitPosition;           // Where the customer leaves
