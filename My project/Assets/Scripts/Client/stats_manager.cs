@@ -28,11 +28,14 @@ public class GameStatsManager : MonoBehaviour
     public static int robotOrdersCompleted_Today = 0;
     public static int totalCustomersTimedOut_Today = 0;
     public static int totalCustomersServed_Today = 0;  // Total customers spawned today
+    public static int totalOrdersServed_Today = 0;
 
     // Total statistics across all days (static)
     public static int humanOrdersCompleted_Total = 0;
     public static int robotOrdersCompleted_Total = 0;
     public static int totalCustomersTimedOut_Total = 0;
+    public static int totalOrdersServed = 0;
+   
 
     // Day-by-day breakdown (static)
     public static int day1_HumanOrders = 0;
@@ -161,6 +164,8 @@ public class GameStatsManager : MonoBehaviour
     {
         humanOrdersCompleted_Today++;
         humanOrdersCompleted_Total++;
+        totalOrdersServed_Today++;
+        totalOrdersServed++;
 
         // Add to the current day's breakdown
         switch (currentDay)
@@ -182,6 +187,8 @@ public class GameStatsManager : MonoBehaviour
     {
         robotOrdersCompleted_Today++;
         robotOrdersCompleted_Total++;
+        totalOrdersServed_Today++;
+        totalOrdersServed++;
 
         // Add to the current day's breakdown
         switch (currentDay)
@@ -230,6 +237,7 @@ public class GameStatsManager : MonoBehaviour
         robotOrdersCompleted_Today = 0;
         totalCustomersTimedOut_Today = 0;
         totalCustomersServed_Today = 0;
+        totalOrdersServed_Today = 0;
 
         Debug.Log($"=== Started Day {dayNumber} ===");
         Debug.Log($"Customer Limit: {customerLimit}");
@@ -245,5 +253,10 @@ public class GameStatsManager : MonoBehaviour
         stats += $"Day 3: Human {day3_HumanOrders} | Robot {day3_RobotOrders} | Timed Out {day3_TimedOut} | Total Served: {day3_Total}\n";
         stats += $"\nTOTAL: Human {humanOrdersCompleted_Total} | Robot {robotOrdersCompleted_Total} | Timed Out {totalCustomersTimedOut_Total}";
         return stats;
+    }
+
+    public static int GetCustomersServed()
+    {
+        return totalOrdersServed_Today;
     }
 }

@@ -11,25 +11,32 @@ public class DayManager : MonoBehaviour
     public int day1_TotalCustomers = 10;      // Total customers to spawn
     public int day1_HumanPercentage = 0;      // 0% = Only robots
     public int day1_MaxQueueSize = 5;
+    public int day1_Quota = 7;
 
     [Header("Day 2 - Robots + Humans")]
     public int day2_TotalCustomers = 15;      // Total customers to spawn
     public int day2_HumanPercentage = 33;     // 33% humans, 67% robots
     public int day2_MaxQueueSize = 8;
+    public int day2_Quota = 10;
 
     [Header("Day 3 - Robots + Humans")]
     public int day3_TotalCustomers = 20;      // Total customers to spawn
     public int day3_HumanPercentage = 60;     // 60% humans, 40% robots
     public int day3_MaxQueueSize = 8;
+    public int day3_quota = 15;
 
     [Header("References")]
     public QueueManager_Human humanQueueManager;
     public QueueManager_Robot robotQueueManager;
 
+    [Header("Environment")]
+    public GameObject corpse;
+
     // Current day settings
     private int totalCustomersForDay;
     private int humanPercentageForDay;
     private int maxQueueSizeForDay;
+    private int quotaForDay;
 
     void Start()
     {
@@ -49,11 +56,17 @@ public class DayManager : MonoBehaviour
         // Check if all customers have spawned AND all queues are empty
         bool allCustomersSpawned = GameStatsManager.HasReachedCustomerLimit();
         bool queuesEmpty = humanQueueManager.queue.Count == 0 && robotQueueManager.queue.Count == 0;
+        int served = GameStatsManager.GetCustomersServed();
+
+        if (served >= quotaForDay)
+        {
+            Invoke(nameof(NextDay), 2f);
+        }
 
         if (allCustomersSpawned && queuesEmpty && currentDay < 3)
         {
             Debug.Log($"Day {currentDay} Complete! All {totalCustomersForDay} customers processed.");
-            NextDay();
+            Invoke(nameof(NextDay), 2f);
         }
     }
 
@@ -67,16 +80,19 @@ public class DayManager : MonoBehaviour
                 totalCustomersForDay = day1_TotalCustomers;
                 humanPercentageForDay = day1_HumanPercentage;
                 maxQueueSizeForDay = day1_MaxQueueSize;
+                quotaForDay = day1_Quota;
                 break;
             case 2:
                 totalCustomersForDay = day2_TotalCustomers;
                 humanPercentageForDay = day2_HumanPercentage;
                 maxQueueSizeForDay = day2_MaxQueueSize;
+                quotaForDay = day2_Quota;
                 break;
             case 3:
                 totalCustomersForDay = day3_TotalCustomers;
                 humanPercentageForDay = day3_HumanPercentage;
                 maxQueueSizeForDay = day3_MaxQueueSize;
+                quotaForDay = day3_quota;
                 break;
             default:
                 Debug.LogError("Day " + day + " not configured!");
@@ -110,6 +126,7 @@ public class DayManager : MonoBehaviour
         currentDay++;
         Debug.Log($"!!! Advancing to DAY {currentDay} !!!");
 
+
         // Clear all remaining customers
         ClearAllCustomers();
 
@@ -121,6 +138,9 @@ public class DayManager : MonoBehaviour
                 break;
             case 2:
                 GameStatsManager.StartNewDay(2, day2_TotalCustomers);
+                Instantiate(corpse, new Vector3(3.75200009f, 0.558000028f, -5.26900005f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
+                Instantiate(corpse, new Vector3(4.75200009f, 0.558000028f, -5.79900005f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
+
                 break;
             case 3:
                 GameStatsManager.StartNewDay(3, day3_TotalCustomers);
