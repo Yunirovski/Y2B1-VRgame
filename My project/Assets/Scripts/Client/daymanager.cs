@@ -144,6 +144,10 @@ public class DayManager : MonoBehaviour
                 break;
             case 3:
                 GameStatsManager.StartNewDay(3, day3_TotalCustomers);
+                Instantiate(corpse, new Vector3(8.7840004f, 0.586660028f, 1.41900003f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
+                Instantiate(corpse, new Vector3(4.60200024f, 0.586660028f, 1.41900003f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
+                Instantiate(corpse, new Vector3(10.8330002f, 0.586660028f, 1.41900003f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
+                Instantiate(corpse, new Vector3(9.98200035f, 0.586660028f, 0.127000004f), new Quaternion(0, 0, 0.707106829f, 0.707106829f));
                 break;
         }
 
