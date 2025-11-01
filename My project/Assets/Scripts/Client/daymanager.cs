@@ -38,6 +38,8 @@ public class DayManager : MonoBehaviour
     private int maxQueueSizeForDay;
     private int quotaForDay;
 
+    private bool EndedDay;
+
     void Start()
     {
         // Initialize day 1
@@ -58,15 +60,19 @@ public class DayManager : MonoBehaviour
         bool queuesEmpty = humanQueueManager.queue.Count == 0 && robotQueueManager.queue.Count == 0;
         int served = GameStatsManager.GetCustomersServed();
 
+        if (EndedDay) return;
+
         if (served >= quotaForDay)
         {
             Invoke(nameof(NextDay), 2f);
+            EndedDay = true;
         }
 
         if (allCustomersSpawned && queuesEmpty && currentDay < 3)
         {
             Debug.Log($"Day {currentDay} Complete! All {totalCustomersForDay} customers processed.");
             Invoke(nameof(NextDay), 2f);
+            EndedDay = true;
         }
     }
 
@@ -116,6 +122,8 @@ public class DayManager : MonoBehaviour
     // Call this to manually advance to the next day
     public void NextDay()
     {
+        EndedDay = false;
+
         if (currentDay >= 3)
         {
             Debug.Log("Game Complete!");
