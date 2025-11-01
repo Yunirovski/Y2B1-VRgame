@@ -14,14 +14,12 @@ public class QueueManager_Robot : MonoBehaviour
     public float spawnInterval = 5f;     // Time between spawns
     public int maxQueueSize = 5;         // Max customers at once
 
-    [Header("Limited Spawning")]
-    public bool unlimitedMode = false;   // Turn on for unlimited customers
-    public int totalCustomersToSpawn = 10; // How many customers in total
+    [Header("Order Target")]
+    public int orderTargetCount = 10;   // How many orders to complete (set by DayManager)
 
     // Internal variables
     public List<CustomerOrderSystem> queue = new List<CustomerOrderSystem>();
     private float nextSpawnTime;
-    public int customersSpawned = 0; // Counter for spawned customers
 
     void Start()
     {
@@ -37,9 +35,12 @@ public class QueueManager_Robot : MonoBehaviour
     {
         int maxCapacity = queuePositions.Length + 1;
         int effectiveMax = Mathf.Min(maxCapacity, maxQueueSize);
-        bool canSpawn = unlimitedMode || customersSpawned < totalCustomersToSpawn;
 
-        if (Time.time >= nextSpawnTime && queue.Count < effectiveMax && canSpawn)
+        // Check if we should still spawn customers
+        int ordersCompleted = GameStatsManager.robotOrdersCompleted;
+        bool shouldStillSpawn = ordersCompleted < orderTargetCount;
+
+        if (Time.time >= nextSpawnTime && queue.Count < effectiveMax && shouldStillSpawn)
         {
             SpawnCustomer();
             nextSpawnTime = Time.time + spawnInterval;
@@ -92,8 +93,7 @@ public class QueueManager_Robot : MonoBehaviour
 
         // Now we have a confirmed Robot customer
         AddCustomerToQueue(customer);
-        customersSpawned++;
-        Debug.Log($"Robot customer spawned. Total: {customersSpawned}/{totalCustomersToSpawn}");
+        Debug.Log($"Robot customer spawned. Target: {orderTargetCount}, Completed: {GameStatsManager.robotOrdersCompleted}");
     }
 
     public void AddCustomerToQueue(CustomerOrderSystem customer)

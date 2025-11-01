@@ -24,6 +24,9 @@ public class CustomerOrderSystem : MonoBehaviour
     public float stopDistance = 0.5f;        // Distance to consider "arrived"
     public float positionCheckInterval = 0.2f; // How often we check if the target moved
 
+    [Header("Timing")]
+    public float waitTimeBeforeTimeout = 15f; // Seconds before customer leaves unhappy
+
     [Header("State")]
     public bool hasReceivedOrder = false;    // Did the customer get the item?
     public bool isAtCounter = false;         // Is the customer at the counter?
@@ -33,6 +36,10 @@ public class CustomerOrderSystem : MonoBehaviour
     private float nextPositionCheck;
     private Vector3 lastTargetPosition;      // Last target position we set on the agent
     private Transform lastQueuePosition;     // Track last assigned queue position
+
+    private float orderTimer = 0f;           // Timer for waiting at counter
+    private bool orderTimerActive = false;   // Is timer running?
+    private bool orderCompleted = false;     // Has order been completed?
 
     private enum CustomerState
     {
@@ -106,10 +113,7 @@ public class CustomerOrderSystem : MonoBehaviour
                 break;
 
             case CustomerState.AtCounter:
-                if (hasReceivedOrder)
-                {
-                    StartLeaving();
-                }
+                UpdateOrderTimer();
                 break;
 
             case CustomerState.Leaving:
@@ -160,6 +164,58 @@ public class CustomerOrderSystem : MonoBehaviour
         Debug.Log($"Customer arrived at counter. Order: {orderType}");
     }
 
+    // Called when player clicks accept order button
+    public void StartOrderTimer()
+    {
+        if (currentState == CustomerState.AtCounter && !orderTimerActive)
+        {
+            orderTimer = waitTimeBeforeTimeout;
+            orderTimerActive = true;
+            Debug.Log($"Order timer started: {waitTimeBeforeTimeout}s for {orderType}");
+        }
+    }
+
+    // Update the timer while waiting for order
+    void UpdateOrderTimer()
+    {
+        if (!orderTimerActive || orderCompleted) return;
+
+        orderTimer -= Time.deltaTime;
+
+        // Update UI with remaining time
+        if (customerType == CustomerType.Human)
+            GameStatsManager.UpdateTimer_Human(orderTimer);
+        else
+            GameStatsManager.UpdateTimer_Robot(orderTimer);
+
+        // Check if order received
+        if (hasReceivedOrder)
+        {
+            if (orderTimer > 0)
+            {
+                // Order completed on time
+                if (customerType == CustomerType.Human)
+                    GameStatsManager.humanOrdersCompleted++;
+                else
+                    GameStatsManager.robotOrdersCompleted++;
+
+                orderCompleted = true;
+                orderTimerActive = false;
+                Debug.Log($"✓✓✓ ORDER COMPLETED! Type: {orderType}");
+            }
+            return;
+        }
+
+        // Time ran out
+        if (orderTimer <= 0)
+        {
+            Debug.Log(">>> TIMER EXPIRED - Customer timed out");
+            GameStatsManager.AddTimedOutCustomer();
+            orderCompleted = true;
+            orderTimerActive = false;
+        }
+    }
+
     // Player gives an item to the customer
     public void ReceiveOrder(GameObject orderItem)
     {
@@ -187,6 +243,7 @@ public class CustomerOrderSystem : MonoBehaviour
             }
 
             hasReceivedOrder = true;
+
             StartLeaving();
         }
         else
