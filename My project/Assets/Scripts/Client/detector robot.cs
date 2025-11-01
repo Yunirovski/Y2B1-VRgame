@@ -31,6 +31,13 @@ public class OrderDeliveryDetector_Robot : MonoBehaviour
         {
             Debug.Log($"[ROBOT] Customer expects: {currentCustomer.orderType}");
 
+            // Check if order timer has been started (player accepted the order)
+            if (!currentCustomer.orderTimerActive)
+            {
+                Debug.Log("[ROBOT] ✗ Order not accepted yet! Player must press accept button first.");
+                return;
+            }
+
             // Check if order matches
             if (other.tag == currentCustomer.orderType)
             {

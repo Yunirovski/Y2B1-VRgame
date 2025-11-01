@@ -30,6 +30,7 @@ public class CustomerOrderSystem : MonoBehaviour
     [Header("State")]
     public bool hasReceivedOrder = false;    // Did the customer get the item?
     public bool isAtCounter = false;         // Is the customer at the counter?
+    public bool orderTimerActive = false;    // Is timer running? (made public for detector access)
 
     private NavMeshAgent agent;
     private CustomerState currentState;
@@ -38,7 +39,6 @@ public class CustomerOrderSystem : MonoBehaviour
     private Transform lastQueuePosition;     // Track last assigned queue position
 
     private float orderTimer = 0f;           // Timer for waiting at counter
-    private bool orderTimerActive = false;   // Is timer running?
     private bool orderCompleted = false;     // Has order been completed?
 
     private enum CustomerState
@@ -209,10 +209,13 @@ public class CustomerOrderSystem : MonoBehaviour
         // Time ran out
         if (orderTimer <= 0)
         {
-            Debug.Log(">>> TIMER EXPIRED - Customer timed out");
+            Debug.Log(">>> TIMER EXPIRED - Customer timed out and is leaving unhappy");
             GameStatsManager.AddTimedOutCustomer();
             orderCompleted = true;
             orderTimerActive = false;
+
+            // Customer leaves when timer expires
+            StartLeaving();
         }
     }
 

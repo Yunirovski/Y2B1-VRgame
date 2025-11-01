@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1459370}
   - component: {fileID: 1459369}
   - component: {fileID: 1459368}
+  - component: {fileID: 1459373}
   m_Layer: 0
   m_Name: Button (2)
   m_TagString: Untagged
@@ -329,6 +330,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &1459373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857018f9338b8a74785975a0d1144473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HumanAcceptOrderButton
+  humanQueueManager: {fileID: 1430385505}
 --- !u!1 &1906298
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,13 +591,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850bc04fff568444c94c5f30c7888912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStatsManager
-  ordersCompletedText: {fileID: 1751894701}
+  humanOrdersCompletedText: {fileID: 0}
+  robotOrdersCompletedText: {fileID: 0}
   customersTimedOutText: {fileID: 1906299}
   timerText_Human: {fileID: 1185272458}
   timerText_Robot: {fileID: 872786818}
-  totalCustomersText: {fileID: 478117479}
-  humanQueueManager: {fileID: 1430385505}
-  robotQueueManager: {fileID: 473989517}
 --- !u!4 &125928788
 Transform:
   m_ObjectHideFlags: 0
@@ -809,7 +821,7 @@ GameObject:
   - component: {fileID: 357831496}
   - component: {fileID: 357831495}
   m_Layer: 5
-  m_Name: Panel (1)
+  m_Name: Time out count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1374,10 +1386,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 2000302273}
   spawnInterval: 5
   maxQueueSize: 5
-  unlimitedMode: 0
-  totalCustomersToSpawn: 10
+  orderTargetCount: 10
   queue: []
-  customersSpawned: 0
 --- !u!1 &478117477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,7 +1855,7 @@ GameObject:
   - component: {fileID: 496350221}
   - component: {fileID: 496350220}
   m_Layer: 5
-  m_Name: Panel (2)
+  m_Name: Day
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,12 +2459,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   currentDay: 1
   dayText: {fileID: 712458492}
-  day1_Robots: 5
-  day1_Humans: 0
-  day2_Robots: 5
-  day2_Humans: 5
-  day3_Robots: 5
-  day3_Humans: 10
+  day1_RobotsTarget: 10
+  day1_HumansTarget: 0
+  day1_MaxCustomers: 5
+  day2_RobotsTarget: 8
+  day2_HumansTarget: 5
+  day2_MaxCustomers: 8
+  day3_RobotsTarget: 5
+  day3_HumansTarget: 10
+  day3_MaxCustomers: 8
   humanQueueManager: {fileID: 1430385505}
   robotQueueManager: {fileID: 473989517}
 --- !u!1001 &645987057
@@ -5768,10 +5781,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 425389266}
   spawnInterval: 5
   maxQueueSize: 5
-  unlimitedMode: 0
-  totalCustomersToSpawn: 10
+  orderTargetCount: 0
   queue: []
-  customersSpawned: 0
 --- !u!1 &1477555044
 GameObject:
   m_ObjectHideFlags: 0
@@ -6067,8 +6078,10 @@ MonoBehaviour:
   exitPosition: {fileID: 2107561447}
   stopDistance: 0.1
   positionCheckInterval: 0.2
+  waitTimeBeforeTimeout: 15
   hasReceivedOrder: 0
   isAtCounter: 0
+  orderTimerActive: 0
 --- !u!195 &1565710734
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6282,8 +6295,10 @@ MonoBehaviour:
   exitPosition: {fileID: 1131739336}
   stopDistance: 0.1
   positionCheckInterval: 0.2
+  waitTimeBeforeTimeout: 15
   hasReceivedOrder: 0
   isAtCounter: 0
+  orderTimerActive: 0
 --- !u!195 &1592067465
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6565,8 +6580,10 @@ MonoBehaviour:
   exitPosition: {fileID: 1131739336}
   stopDistance: 0.1
   positionCheckInterval: 0.2
+  waitTimeBeforeTimeout: 15
   hasReceivedOrder: 0
   isAtCounter: 0
+  orderTimerActive: 0
 --- !u!195 &1599546779
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6654,8 +6671,8 @@ GameObject:
   - component: {fileID: 1621048682}
   - component: {fileID: 1621048681}
   - component: {fileID: 1621048680}
-  - component: {fileID: 1621048679}
   - component: {fileID: 1621048678}
+  - component: {fileID: 1621048684}
   m_Layer: 0
   m_Name: Button (1)
   m_TagString: Untagged
@@ -6735,19 +6752,6 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
---- !u!114 &1621048679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621048677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9e543c10d4f3f46945e7fb0b9a0ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlateButton
-  Plate: {fileID: 8239657029771945257, guid: 6d6e53b64efe65548b6f6645c0f328d4, type: 3}
 --- !u!65 &1621048680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6866,6 +6870,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &1621048684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621048677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5282ba77309c1af41b29b93aafdd164e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RobotAcceptOrderButton
+  robotQueueManager: {fileID: 473989517}
 --- !u!1 &1680970617
 GameObject:
   m_ObjectHideFlags: 0
