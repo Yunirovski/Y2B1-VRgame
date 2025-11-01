@@ -195,9 +195,9 @@ public class CustomerOrderSystem : MonoBehaviour
             {
                 // Order completed on time - INCREMENT STATS HERE
                 if (customerType == CustomerType.Human)
-                    GameStatsManager.humanOrdersCompleted++;
+                    GameStatsManager.AddHumanOrder();
                 else
-                    GameStatsManager.robotOrdersCompleted++;
+                    GameStatsManager.AddRobotOrder();
 
                 orderCompleted = true;
                 orderTimerActive = false;
