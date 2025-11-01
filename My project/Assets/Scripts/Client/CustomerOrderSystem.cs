@@ -193,7 +193,7 @@ public class CustomerOrderSystem : MonoBehaviour
         {
             if (orderTimer > 0)
             {
-                // Order completed on time
+                // Order completed on time - INCREMENT STATS HERE
                 if (customerType == CustomerType.Human)
                     GameStatsManager.humanOrdersCompleted++;
                 else
@@ -202,6 +202,9 @@ public class CustomerOrderSystem : MonoBehaviour
                 orderCompleted = true;
                 orderTimerActive = false;
                 Debug.Log($"✓✓✓ ORDER COMPLETED! Type: {orderType}");
+
+                // NOW leave after counting
+                StartLeaving();
             }
             return;
         }
@@ -245,9 +248,9 @@ public class CustomerOrderSystem : MonoBehaviour
                 orderItem.transform.localRotation = Quaternion.identity;
             }
 
+            // Mark that order was received
+            // UpdateOrderTimer() will handle the rest (counting and leaving)
             hasReceivedOrder = true;
-
-            StartLeaving();
         }
         else
         {
