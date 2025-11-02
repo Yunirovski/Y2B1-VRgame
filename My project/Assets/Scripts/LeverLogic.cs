@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(AudioSource))]
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     HingeJoint joint;
     public GameObject GoobEmpty;
     public GameObject GoobFull;
+    AudioSource audioData;
 
     private bool Used;
 
@@ -15,6 +17,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {   
 
         joint = GetComponentInChildren<HingeJoint>();
+        audioData = GetComponent<AudioSource>();
     }
 
     public UnityEvent OnEnterTrigger;
@@ -27,6 +30,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
             {
                 if (other.CompareTag("Empty"))
                 {
+                    audioData.Play();
                     Destroy(other.gameObject);
                     Instantiate(GoobFull, other.transform.position, Quaternion.identity);
                     Used = true;
