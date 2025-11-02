@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a55642a60811e824e8b3f5c4cc7eca6d, type: 3}
       propertyPath: m_TagString
-      value: GoobSpice1
+      value: burger
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

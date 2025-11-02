@@ -54,7 +54,7 @@ public class TVScreenManager : MonoBehaviour
 
         switch (orderType.ToLower())
         {
-            case "goob":
+            case "cooked":
                 goobScreen.SetActive(true);
                 break;
             case "burger":

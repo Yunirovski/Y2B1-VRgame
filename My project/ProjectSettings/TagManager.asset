@@ -7,8 +7,9 @@ TagManager:
   - Anchor
   - Empty
   - Goob
-  - GoobSpice1
-  - GoobSpice2
+  - cooked
+  - burger
+  - pizza
   layers:
   - Default
   - TransparentFX
