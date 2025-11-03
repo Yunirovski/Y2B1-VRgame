@@ -2,14 +2,17 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+[RequireComponent(typeof(AudioSource))]
 public class RobotAcceptOrderButton : MonoBehaviour
 {
     [Header("References")]
     public QueueManager_Robot robotQueueManager;
 
+    AudioSource audioData;
     void Start()
     {
         XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
+        audioData = GetComponent<AudioSource>();
 
         if (interactable != null)
         {
@@ -20,6 +23,7 @@ public class RobotAcceptOrderButton : MonoBehaviour
     void OnButtonPressed(SelectEnterEventArgs args)
     {
         Debug.Log("Robot Accept Order button pressed!");
+        audioData.Play();
 
         CustomerOrderSystem currentCustomer = robotQueueManager.GetCurrentCustomer();
 
