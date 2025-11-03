@@ -33,6 +33,7 @@ public class CustomerOrderSystem : MonoBehaviour
     public bool orderTimerActive = false;    // Is timer running? (made public for detector access)
 
     private NavMeshAgent agent;
+    private Animator animator;               // Animation controller
     private CustomerState currentState;
     private float nextPositionCheck;
     private Vector3 lastTargetPosition;      // Last target position we set on the agent
@@ -52,6 +53,7 @@ public class CustomerOrderSystem : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         // Basic safety: we need a NavMeshAgent to move
         if (agent == null)
@@ -120,6 +122,22 @@ public class CustomerOrderSystem : MonoBehaviour
                 CheckArrivalAtExit();
                 break;
         }
+
+        // 更新动画状态
+        UpdateAnimationState();
+    }
+
+    // 新增方法：更新动画
+    void UpdateAnimationState()
+    {
+        if (animator == null) return;
+
+        // 根据NavMeshAgent的速度判断是否在移动
+        float speed = agent.velocity.magnitude;
+        bool isWalking = speed > 0.1f;
+
+        // 设置动画参数
+        animator.SetBool("IsWalking", isWalking);
     }
 
     // Check if the queue target Transform moved and update the agent's destination
