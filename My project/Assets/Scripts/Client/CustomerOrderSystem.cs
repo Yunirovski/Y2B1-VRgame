@@ -256,15 +256,12 @@ public class CustomerOrderSystem : MonoBehaviour
         {
             Debug.Log("✓ Correct order. Customer will leave.");
 
+            // Destroy the held item (the order icon)
             if (heldItem != null)
                 Destroy(heldItem);
 
-            if (itemHoldPosition != null)
-            {
-                orderItem.transform.SetParent(itemHoldPosition);
-                orderItem.transform.localPosition = Vector3.zero;
-                orderItem.transform.localRotation = Quaternion.identity;
-            }
+            // Destroy the delivered food item immediately - THIS IS THE FIX
+            Destroy(orderItem);
 
             // Mark that order was received
             // UpdateOrderTimer() will handle the rest (counting and leaving)
