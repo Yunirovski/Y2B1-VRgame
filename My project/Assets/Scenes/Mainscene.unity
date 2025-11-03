@@ -4321,7 +4321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecc928a847a726f41a67c99a9cb4e19b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6872101
+      value: 1.649
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecc928a847a726f41a67c99a9cb4e19b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17061,7 +17061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BGMPlayer
   bgmClip: {fileID: 8300000, guid: 9cb9792ab519848408545a3680b5ec73, type: 3}
-  volume: 0.5
+  volume: 0.3
   volumeSlider: {fileID: 0}
 --- !u!4 &1773612505
 Transform:
