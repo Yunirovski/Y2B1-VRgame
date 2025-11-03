@@ -31,9 +31,8 @@ public class SpiceButton : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("GoobMicro"))
+        if (other.CompareTag("cooked"))
         {
-            Debug.Log("OBJECT ENTER");
             unga = true;
             plateog = other.gameObject;
             PlatePos = other.transform.position;
